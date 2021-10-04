@@ -1,4 +1,4 @@
-= group-sync-operator
+= Group Sync Operator
 
 group-sync-operator is a Commodore component to manage group-sync-operator.
 
