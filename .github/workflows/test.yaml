@@ -5,7 +5,7 @@ on:
       - master
 
 env:
-  COMPONENT_NAME: Group Sync Operator
+  COMPONENT_NAME: group-sync-operator
 
 jobs:
   linting:
