@@ -1,0 +1,6 @@
+name: group-sync-operator
+title: group-sync-operator
+version: master
+start_page: ROOT:index.adoc
+nav:
+  - modules/ROOT/partials/nav.adoc

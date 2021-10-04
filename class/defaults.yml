@@ -1,0 +1,4 @@
+parameters:
+  group_sync_operator:
+    =_metadata: {}
+    namespace: syn-group-sync-operator

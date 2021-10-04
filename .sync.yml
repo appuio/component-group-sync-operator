@@ -1,0 +1,7 @@
+:global:
+  componentName: group-sync-operator
+  githubUrl: https://github.com/appuio/component-group-sync-operator
+
+docs/antora.yml:
+  name: group-sync-operator
+  title: group-sync-operator
