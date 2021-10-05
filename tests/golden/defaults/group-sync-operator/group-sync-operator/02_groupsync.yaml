@@ -1,0 +1,39 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: GroupSync
+metadata:
+  name: foo
+  namespace: syn-group-sync-operator
+spec:
+  providers:
+    - keycloak:
+        loginRealm: bar-public
+        realm: bar-public
+        scope: sub
+        url: https://id.company.io
+      name: credless
+    - keycloak:
+        credentialsSecret:
+          name: groupsync-credentials-foo-keycloak
+          namespace: syn-group-sync-operator
+        loginRealm: foo-public
+        realm: foo-public
+        scope: sub
+        url: https://id.company.io
+      name: keycloak
+      newProvider:
+        credentialsSecret:
+          name: groupsync-credentials-foo-keycloak
+          namespace: syn-group-sync-operator
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: GroupSync
+metadata:
+  name: other
+  namespace: syn-group-sync-operator
+spec:
+  providers:
+    - azure:
+        credentialsSecret:
+          name: groupsync-credentials-other-foo
+          namespace: syn-group-sync-operator
+      name: foo

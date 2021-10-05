@@ -5,6 +5,6 @@ local inv = kap.inventory();
 // The hiera parameters for the component
 local params = inv.parameters.group_sync_operator;
 
-// Define outputs below
 {
+  '00_namespace': kube.Namespace(params.namespace),
 }

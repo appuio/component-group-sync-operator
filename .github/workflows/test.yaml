@@ -43,9 +43,13 @@ jobs:
     defaults:
       run:
         working-directory: ${{ env.COMPONENT_NAME }}
+    strategy:
+      matrix:
+        instance:
+          - defaults
     steps:
       - uses: actions/checkout@v2
         with:
           path: ${{ env.COMPONENT_NAME }}
       - name: Golden diff
-        run: make golden-diff
+        run: make golden-diff -e instance=${{ matrix.instance }}

@@ -1,3 +1,33 @@
-# Overwrite parameters here
-
-# parameters: {...}
+parameters:
+  group_sync_operator:
+    sync:
+      foo:
+        schedule: '* * * * *'
+        providers:
+          keycloak:
+            credentials:
+              stingData:
+                username: foo
+                password: bar
+            keycloak:
+              url: https://id.company.io
+              loginRealm: foo-public
+              realm: foo-public
+              scope: sub
+            newProvider: {}
+          credless:
+            keycloak:
+              url: https://id.company.io
+              loginRealm: bar-public
+              realm: bar-public
+              scope: sub
+      other:
+        schedule: '* * 2 * *'
+        providers:
+          foo:
+            credentials:
+              stingData:
+                AZURE_TENANT_ID: 1a
+                AZURE_CLIENT_ID: foobar
+                AZURE_CLIENT_SECRET: secret
+            azure: {}

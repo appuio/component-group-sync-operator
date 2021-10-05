@@ -7,5 +7,7 @@ parameters:
         output_path: apps/
       - input_paths:
           - group-sync-operator/component/main.jsonnet
+          - group-sync-operator/component/operator.jsonnet
+          - group-sync-operator/component/config.jsonnet
         input_type: jsonnet
         output_path: group-sync-operator/
