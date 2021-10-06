@@ -29,9 +29,10 @@ local parseProvider(k, p) =
   else
     com.makeMergeable(params.sync[k].providers[p]);
 
-
-{
-  '02_groupsync': [
+local groupSyncs = [
+  if !std.objectHas(params.sync[k], 'providers') then
+    error 'GroupSync needs to have at least one provider'
+  else
     {
       apiVersion: 'redhatcop.redhat.io/v1alpha1',
       kind: 'GroupSync',
@@ -46,24 +47,29 @@ local parseProvider(k, p) =
         ],
       },
     }
+  for k in std.objectFields(params.sync)
+];
 
-    for k in std.objectFields(params.sync)
-  ],
-
-  '02_credentials': std.flattenArrays(
-    [
-
+local credentials = std.flattenArrays(
+  [
+    if !std.objectHas(params.sync[k], 'providers') then
+      error 'GroupSync needs to have at least one provider'
+    else
       [
         kube.Secret('groupsync-credentials-%s-%s' % [ k, p ]) {
-          type: 'kubernetes.io/tls',
+          type: 'Opaque',
           metadata+: {
-            namespace: 'Opaque',
+            namespace: params.namespace,
           },
         } + com.makeMergeable(params.sync[k].providers[p].credentials)
         for p in std.objectFields(params.sync[k].providers)
         if std.objectHas(params.sync[k].providers[p], 'credentials')
       ]
-      for k in std.objectFields(params.sync)
-    ]
-  ),
+    for k in std.objectFields(params.sync)
+  ]
+);
+
+{
+  [if std.length(groupSyncs) > 0 then '02_groupsync']: groupSyncs,
+  [if std.length(credentials) > 0 then '02_credentials']: credentials,
 }
