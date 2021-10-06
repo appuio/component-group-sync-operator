@@ -5,16 +5,16 @@ parameters:
         schedule: '* * * * *'
         providers:
           keycloak:
-            credentials:
-              stingData:
-                username: foo
-                password: bar
             keycloak:
               url: https://id.company.io
+              credentialsSecret:
+                name: foo-keycloak
               loginRealm: foo-public
               realm: foo-public
               scope: sub
-            newProvider: {}
+            newProvider:
+              credentialsSecret:
+                name: foo-keycloak
           credless:
             keycloak:
               url: https://id.company.io
@@ -25,9 +25,17 @@ parameters:
         schedule: '* * 2 * *'
         providers:
           foo:
-            credentials:
-              stingData:
-                AZURE_TENANT_ID: 1a
-                AZURE_CLIENT_ID: foobar
-                AZURE_CLIENT_SECRET: secret
-            azure: {}
+            azure:
+              credentialsSecret:
+                name: other-foo
+
+    secrets:
+      foo-keycloak:
+        stingData:
+          username: foo
+          password: bar
+      other-foo:
+        stingData:
+          AZURE_TENANT_ID: 1a
+          AZURE_CLIENT_ID: foobar
+          AZURE_CLIENT_SECRET: secret

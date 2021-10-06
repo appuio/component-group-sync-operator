@@ -13,7 +13,7 @@ spec:
       name: credless
     - keycloak:
         credentialsSecret:
-          name: groupsync-credentials-foo-keycloak
+          name: foo-keycloak
           namespace: syn-group-sync-operator
         loginRealm: foo-public
         realm: foo-public
@@ -22,7 +22,7 @@ spec:
       name: keycloak
       newProvider:
         credentialsSecret:
-          name: groupsync-credentials-foo-keycloak
+          name: foo-keycloak
           namespace: syn-group-sync-operator
 ---
 apiVersion: redhatcop.redhat.io/v1alpha1
@@ -34,6 +34,6 @@ spec:
   providers:
     - azure:
         credentialsSecret:
-          name: groupsync-credentials-other-foo
+          name: other-foo
           namespace: syn-group-sync-operator
       name: foo

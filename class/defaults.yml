@@ -9,3 +9,4 @@ parameters:
       source: 'community-operators'
       sourceNamespace: 'openshift-marketplace'
     sync: {}
+    secrets: {}

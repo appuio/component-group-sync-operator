@@ -4,30 +4,20 @@ local kube = import 'lib/kube.libjsonnet';
 local inv = kap.inventory();
 // The hiera parameters for the component
 local params = inv.parameters.group_sync_operator;
-
-local addCredentialRef(cred) = function(config, provider)
-  if std.objectHas(config, provider) then
+//
+local addCredentialNamespace(config, provider) =
+  if std.objectHas(config[provider], 'credentialsSecret') then
     config {
       [provider]+: {
-        credentialsSecret: cred,
+        credentialsSecret+: {
+          namespace: params.namespace,
+        },
       },
     }
   else
     config;
 
-local parseProvider(k, p) =
-  { name: p } +
-  if std.objectHas(params.sync[k].providers[p], 'credentials') then
-    std.foldl(addCredentialRef({
-                name: 'groupsync-credentials-%s-%s' % [ k, p ],
-                namespace: params.namespace,
-              }),
-              std.objectFields(params.sync[k].providers[p]),
-              com.makeMergeable(params.sync[k].providers[p]) + {
-                credentials:: {},
-              })
-  else
-    com.makeMergeable(params.sync[k].providers[p]);
+local parseProvider(p) = std.foldl(addCredentialNamespace, std.objectFields(p), com.makeMergeable(p));
 
 local groupSyncs = [
   if !std.objectHas(params.sync[k], 'providers') then
@@ -42,7 +32,7 @@ local groupSyncs = [
       },
       spec: {
         providers: [
-          parseProvider(k, p)
+          { name: p } + parseProvider(params.sync[k].providers[p])
           for p in std.objectFields(params.sync[k].providers)
         ],
       },
@@ -50,24 +40,15 @@ local groupSyncs = [
   for k in std.objectFields(params.sync)
 ];
 
-local credentials = std.flattenArrays(
-  [
-    if !std.objectHas(params.sync[k], 'providers') then
-      error 'GroupSync needs to have at least one provider'
-    else
-      [
-        kube.Secret('groupsync-credentials-%s-%s' % [ k, p ]) {
-          type: 'Opaque',
-          metadata+: {
-            namespace: params.namespace,
-          },
-        } + com.makeMergeable(params.sync[k].providers[p].credentials)
-        for p in std.objectFields(params.sync[k].providers)
-        if std.objectHas(params.sync[k].providers[p], 'credentials')
-      ]
-    for k in std.objectFields(params.sync)
-  ]
-);
+local credentials = [
+  kube.Secret(kube.hyphenate(s)) {
+    type: 'Opaque',
+    metadata+: {
+      namespace: params.namespace,
+    },
+  } + com.makeMergeable(params.secrets[s])
+  for s in std.objectFields(params.secrets)
+];
 
 {
   [if std.length(groupSyncs) > 0 then '02_groupsync']: groupSyncs,
