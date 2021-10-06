@@ -24,13 +24,7 @@ local subscription = {
   metadata: {
     name: 'group-sync-operator',
   },
-  spec: {
-    channel: 'alpha',
-    installPlanApproval: 'Automatic',
-    name: 'group-sync-operator',
-    source: 'community-operators',
-    sourceNamespace: 'openshift-marketplace',
-  },
+  spec: params.subscription,
 };
 
 local operator = [
