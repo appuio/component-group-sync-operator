@@ -32,7 +32,7 @@ local groupSyncs = [
       },
       spec: {
         providers: [
-          { name: p } + parseProvider(params.sync[k].providers[p])
+          { name: p } + patchProvider(params.sync[k].providers[p])
           for p in std.objectFields(params.sync[k].providers)
         ],
       },
@@ -41,7 +41,7 @@ local groupSyncs = [
 ];
 
 local credentials = [
-  kube.Secret(kube.hyphenate(s)) {
+  kube.Secret(s) {
     type: 'Opaque',
     metadata+: {
       namespace: params.namespace,
