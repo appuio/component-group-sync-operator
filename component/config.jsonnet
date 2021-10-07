@@ -17,7 +17,7 @@ local addCredentialNamespace(config, provider) =
   else
     config;
 
-local parseProvider(p) = std.foldl(addCredentialNamespace, std.objectFields(p), com.makeMergeable(p));
+local patchProvider(p) = std.foldl(addCredentialNamespace, std.objectFields(p), com.makeMergeable(p));
 
 local groupSyncs = [
   if !std.objectHas(params.sync[k], 'providers') then
