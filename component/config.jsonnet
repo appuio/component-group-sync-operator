@@ -26,38 +26,49 @@ local addCredentialNamespace(config, provider) =
 
 local patchProvider(p) = std.foldl(addCredentialNamespace, std.objectFields(p), com.makeMergeable(p));
 
-local groupSyncs = [
-  if !std.objectHas(params.sync[k], 'providers') then
-    error 'GroupSync needs to have at least one provider'
-  else
-    {
-      apiVersion: 'redhatcop.redhat.io/v1alpha1',
-      kind: 'GroupSync',
-      metadata: {
-        name: k,
-        namespace: params.namespace,
-        labels+: labels,
-      },
-      spec: {
-        providers: [
-          { name: p } + patchProvider(params.sync[k].providers[p])
-          for p in std.objectFields(params.sync[k].providers)
-        ],
-      },
-    }
-  for k in std.objectFields(params.sync)
-];
+local groupSyncs = std.filter(
+  // Ignore nullified objects
+  function(it) it != null,
+  [
+    if params.sync[k] != null then (
+      if !std.objectHas(params.sync[k], 'providers') then
+        error 'GroupSync needs to have at least one provider'
+      else
+        {
+          apiVersion: 'redhatcop.redhat.io/v1alpha1',
+          kind: 'GroupSync',
+          metadata: {
+            name: k,
+            namespace: params.namespace,
+            labels+: labels,
+          },
+          spec: {
+            providers: [
+              { name: p } + patchProvider(params.sync[k].providers[p])
+              for p in std.objectFields(params.sync[k].providers)
+            ],
+          },
+        }
+    )
+    for k in std.objectFields(params.sync)
+  ]
+);
 
-local credentials = [
-  kube.Secret(s) {
-    type: 'Opaque',
-    metadata+: {
-      namespace: params.namespace,
-      labels+: labels,
-    },
-  } + com.makeMergeable(params.secrets[s])
-  for s in std.objectFields(params.secrets)
-];
+local credentials = std.filter(
+  // Ignore nullified objects
+  function(it) it != null,
+  [
+    if params.secrets[s] != null then
+      kube.Secret(s) {
+        type: 'Opaque',
+        metadata+: {
+          namespace: params.namespace,
+          labels+: labels,
+        },
+      } + com.makeMergeable(params.secrets[s])
+    for s in std.objectFields(params.secrets)
+  ]
+);
 
 {
   [if std.length(groupSyncs) > 0 then '02_groupsync']: groupSyncs,
