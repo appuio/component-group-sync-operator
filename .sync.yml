@@ -6,3 +6,7 @@
 docs/antora.yml:
   name: group-sync-operator
   title: Group Sync Operator
+
+.gitignore:
+  additionalEntries:
+    - jsonnetfile.json
