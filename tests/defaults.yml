@@ -29,7 +29,10 @@ parameters:
               credentialsSecret:
                 name: other-foo
 
+      disabled: null
+
     secrets:
+      disabled: null
       foo-keycloak:
         stingData:
           username: foo
