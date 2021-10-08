@@ -4,6 +4,13 @@ local kube = import 'lib/kube.libjsonnet';
 local inv = kap.inventory();
 // The hiera parameters for the component
 local params = inv.parameters.group_sync_operator;
+
+local labels = {
+  'app.kubernetes.io/managed-by': 'commodore',
+  'app.kubernetes.io/part-of': 'syn',
+  'app.kubernetes.io/name': 'group-sync-operator',
+};
+
 //
 local addCredentialNamespace(config, provider) =
   if std.objectHas(config[provider], 'credentialsSecret') then
@@ -29,6 +36,7 @@ local groupSyncs = [
       metadata: {
         name: k,
         namespace: params.namespace,
+        labels+: labels,
       },
       spec: {
         providers: [
@@ -45,6 +53,7 @@ local credentials = [
     type: 'Opaque',
     metadata+: {
       namespace: params.namespace,
+      labels+: labels,
     },
   } + com.makeMergeable(params.secrets[s])
   for s in std.objectFields(params.secrets)
