@@ -34,7 +34,7 @@ parameters:
               scope: sub <2>
     secrets:
       foo-keycloak:
-        stingData:
+        stringData:
           username: '?{vaultkv:${cluster:tenant}/${cluster:name}/group-sync-operator/foo/keycloak/username}'
           password: '?{vaultkv:${cluster:tenant}/${cluster:name}/group-sync-operator/foo/keycloak/password}'
 
