@@ -2,3 +2,11 @@ parameters:
   group_sync_operator:
     =_metadata: {}
     namespace: syn-group-sync-operator
+    subscription:
+      channel: 'alpha'
+      installPlanApproval: 'Automatic'
+      name: 'group-sync-operator'
+      source: 'community-operators'
+      sourceNamespace: 'openshift-marketplace'
+    sync: {}
+    secrets: {}

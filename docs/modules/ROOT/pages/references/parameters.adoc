@@ -11,9 +11,97 @@ default:: `syn-group-sync-operator`
 The namespace in which to deploy this component.
 
 
+== `subscription`
+
+[horizontal]
+type:: dict
+
+The operator subscription details.
+The `group-sync-operator` is installed through the OperatorHub.
+This field gives you the option to directly modify the operator subscription specification.
+
+== `sync`
+
+[horizontal]
+type:: dict
+default:: {}
+
+The configuration for group synchronization.
+This is a map of group synchronization schedule configurations, which will each be converted to a `GroupSync` object.
+
+== `sync[].schedule`
+
+[horizontal]
+type:: string
+
+A crontab based schedule configuration, for when to synchronize the groups.
+If no schedule is provided, synchronization will only occur when the `GroupSync` object is reconciled by the platform.
+
+
+== `sync[].providers`
+
+[horizontal]
+type:: dict
+
+Provider configuration for the group synchronization.
+Each will be converted to a provider configuration entry in the `GroupSync` resource.
+Keys in the dict are used as value for field `name` in the resulting provider configuration.
+Consult the https://github.com/redhat-cop/group-sync-operator/#providers[official documentation] on how to configure your provider.
+
+[TIP]
+====
+For the provider credentials you have the option to create the secret through the `secrets` key.
+You can directly reference this secret as a `credentialsSecret` without having to specify the `namespace`.
+====
+
+
+== `secrets`
+
+[horizontal]
+type:: dict
+default:: {}
+
+Secrets to create in the components namespace.
+The dictionary values are directly merged into the `Secret` resource and the Keys in the dict are used as the `name`.
+
+
 == Example
 
 [source,yaml]
 ----
-namespace: example-namespace
+parameters:
+  group_sync_operator:
+    sync:
+      foo:
+        schedule: '* * * * *'
+        providers:
+          keycloak:
+            keycloak: <1>
+              url: https://id.company.io
+              credentialsSecret:
+                name: foo-keycloak <2>
+              loginRealm: foo-public
+              realm: foo-public
+              scope: sub
+      bar:
+        schedule: '* * 2 * *'
+        providers:
+          bar-azure:
+            azure:
+              credentialsSecret:
+                name: bar-azure-credentials
+
+    secrets:
+      foo-keycloak: <3>
+        stingData:
+          username: foo
+          password: bar
+      bar-azure-credentials:
+        stingData:
+          AZURE_TENANT_ID: 1a
+          AZURE_CLIENT_ID: foobar
+          AZURE_CLIENT_SECRET: secret
 ----
+<1> Configuration according to the https://github.com/redhat-cop/group-sync-operator/#keycloak[official documentation].
+<2> References the secret created at (3)
+<3> Creates a secret with name `foo-keycloak`

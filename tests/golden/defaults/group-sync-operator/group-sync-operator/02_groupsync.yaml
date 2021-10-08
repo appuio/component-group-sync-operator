@@ -1,0 +1,47 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: GroupSync
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: commodore
+    app.kubernetes.io/name: group-sync-operator
+    app.kubernetes.io/part-of: syn
+  name: foo
+  namespace: syn-group-sync-operator
+spec:
+  providers:
+    - keycloak:
+        loginRealm: bar-public
+        realm: bar-public
+        scope: sub
+        url: https://id.company.io
+      name: credless
+    - keycloak:
+        credentialsSecret:
+          name: foo-keycloak
+          namespace: syn-group-sync-operator
+        loginRealm: foo-public
+        realm: foo-public
+        scope: sub
+        url: https://id.company.io
+      name: keycloak
+      newProvider:
+        credentialsSecret:
+          name: foo-keycloak
+          namespace: syn-group-sync-operator
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: GroupSync
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: commodore
+    app.kubernetes.io/name: group-sync-operator
+    app.kubernetes.io/part-of: syn
+  name: other
+  namespace: syn-group-sync-operator
+spec:
+  providers:
+    - azure:
+        credentialsSecret:
+          name: other-foo
+          namespace: syn-group-sync-operator
+      name: foo
