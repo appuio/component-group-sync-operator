@@ -1,6 +1,6 @@
 = Configure Group Sync with Keycloak
 
-To synchronize groups with Keycloak a user with rights to query for Keycloak groups must be available.
+To synchronize groups with Keycloak a user with permissions to query for Keycloak groups must be available.
 The following permissions must be associated to the user:
 
 * Password must be set (Temporary option unselected) on the Credentials tab
@@ -29,7 +29,7 @@ parameters:
               url: https://id.company.io
               credentialsSecret:
                 name: foo-keycloak
-              loginRealm: foo-public <1>
+              loginRealm: master <1>
               realm: foo-public
               scope: sub <2>
     secrets:
@@ -39,6 +39,8 @@ parameters:
           password: '?{vaultkv:${cluster:tenant}/${cluster:name}/group-sync-operator/foo/keycloak/password}'
 
 ----
-<1> The `loginRealm` doesn't necessarily need to be the same as the synchronized realm.
+<1> The `loginRealm` is the realm where the API user is defined.
 <2> Scope for group synchronization.
 `sub` will also synchronize subgroups while `one` won't.
+
+NOTE: It's recommended to have the sync user in a separate realm.
