@@ -1,5 +1,7 @@
 * xref:index.adoc[Home]
-* xref:references/parameters.adoc[Parameters]
+
+.How-tos
 * xref:how-tos/configure-keycloak-sync.adoc[Configure Group Sync with Keycloak]
 
-
+.Technical Reference
+* xref:references/parameters.adoc[Parameters]
