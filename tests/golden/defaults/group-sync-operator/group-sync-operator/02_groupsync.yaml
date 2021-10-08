@@ -1,6 +1,8 @@
 apiVersion: redhatcop.redhat.io/v1alpha1
 kind: GroupSync
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   labels:
     app.kubernetes.io/managed-by: commodore
     app.kubernetes.io/name: group-sync-operator
@@ -32,6 +34,8 @@ spec:
 apiVersion: redhatcop.redhat.io/v1alpha1
 kind: GroupSync
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   labels:
     app.kubernetes.io/managed-by: commodore
     app.kubernetes.io/name: group-sync-operator

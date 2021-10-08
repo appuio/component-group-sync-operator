@@ -41,6 +41,9 @@ local groupSyncs = std.filter(
             name: k,
             namespace: params.namespace,
             labels+: labels,
+            annotations+: {
+              'argocd.argoproj.io/sync-options': 'SkipDryRunOnMissingResource=true',
+            },
           },
           spec: {
             providers: [
