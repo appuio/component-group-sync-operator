@@ -30,6 +30,7 @@ spec:
         credentialsSecret:
           name: foo-keycloak
           namespace: syn-group-sync-operator
+  schedule: '* * * * *'
 ---
 apiVersion: redhatcop.redhat.io/v1alpha1
 kind: GroupSync
@@ -49,3 +50,4 @@ spec:
           name: other-foo
           namespace: syn-group-sync-operator
       name: foo
+  schedule: '* * 2 * *'

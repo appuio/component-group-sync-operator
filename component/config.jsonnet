@@ -46,6 +46,7 @@ local groupSyncs = std.filter(
             },
           },
           spec: {
+            schedule: params.sync[k].schedule,
             providers: [
               { name: p } + patchProvider(params.sync[k].providers[p])
               for p in std.objectFields(params.sync[k].providers)
