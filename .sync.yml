@@ -10,3 +10,12 @@ docs/antora.yml:
 .gitignore:
   additionalEntries:
     - jsonnetfile.json
+
+.github/workflows/test.yaml:
+  goldenTest_makeTarget: golden-diff -e instance=${{ matrix.instance }}
+  makeTarget: test -e instance=${{ matrix.instance }}
+  matrix:
+    key: instance
+    entries:
+      - defaults
+      - empty
