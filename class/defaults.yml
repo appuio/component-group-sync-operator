@@ -1,12 +1,15 @@
 parameters:
   group_sync_operator:
-    =_metadata: {}
     namespace: syn-group-sync-operator
-    subscription:
-      channel: 'alpha'
-      installPlanApproval: 'Automatic'
-      name: 'group-sync-operator'
-      source: 'community-operators'
-      sourceNamespace: 'openshift-marketplace'
+
+    images:
+      operator:
+        registry: quay.io
+        repository: redhat-cop/group-sync-operator
+        tag: v0.0.14
+
+    manifest_version: ${group_sync_operator:images:operator:tag}
+    manifest_url: https://raw.githubusercontent.com/redhat-cop/group-sync-operator/${group_sync_operator:manifest_version}/config
+
     sync: {}
     secrets: {}

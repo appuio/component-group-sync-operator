@@ -10,15 +10,22 @@ default:: `syn-group-sync-operator`
 
 The namespace in which to deploy this component.
 
-
-== `subscription`
+== `images`
 
 [horizontal]
-type:: dict
+type:: dictionary
+default::
++
+[source,yaml]
+----
+operator:
+  registry: quay.io
+  repository: redhat-cop/group-sync-operator
+  tag: v0.0.14
+----
 
-The operator subscription details.
-The `group-sync-operator` is installed through the OperatorHub.
-This field gives you the option to directly modify the operator subscription specification.
+Dictionary containing the container images used by this component.
+
 
 == `sync`
 

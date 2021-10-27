@@ -1,5 +1,23 @@
 parameters:
   kapitan:
+    dependencies:
+      - type: https
+        source: ${group_sync_operator:manifest_url}/crd/bases/redhatcop.redhat.io_groupsyncs.yaml
+        output_path: dependencies/group-sync-operator/manifests/crds/${group_sync_operator:manifest_version}/redhatcop.redhat.io_groupsyncs.yaml
+
+      - type: https
+        source: ${group_sync_operator:manifest_url}/manager/manager.yaml
+        output_path: dependencies/group-sync-operator/manifests/controller/${group_sync_operator:manifest_version}/deployment.yaml
+      - type: https
+        source: ${group_sync_operator:manifest_url}/rbac/role.yaml
+        output_path: dependencies/group-sync-operator/manifests/controller/${group_sync_operator:manifest_version}/role.yaml
+      - type: https
+        source: ${group_sync_operator:manifest_url}/rbac/role_binding.yaml
+        output_path: dependencies/group-sync-operator/manifests/controller/${group_sync_operator:manifest_version}/role_binding.yaml
+      - type: https
+        source: ${group_sync_operator:manifest_url}/rbac/service_account.yaml
+        output_path: dependencies/group-sync-operator/manifests/controller/${group_sync_operator:manifest_version}/service_account.yaml
+
     compile:
       - input_paths:
           - group-sync-operator/component/app.jsonnet
@@ -7,7 +25,6 @@ parameters:
         output_path: apps/
       - input_paths:
           - group-sync-operator/component/main.jsonnet
-          - group-sync-operator/component/operator.jsonnet
           - group-sync-operator/component/config.jsonnet
         input_type: jsonnet
         output_path: group-sync-operator/
