@@ -15,6 +15,12 @@ parameters:
         source: ${group_sync_operator:manifest_url}/rbac/role_binding.yaml
         output_path: dependencies/group-sync-operator/manifests/controller/${group_sync_operator:manifest_version}/role_binding.yaml
       - type: https
+        source: ${group_sync_operator:manifest_url}/rbac/leader_election_role.yaml
+        output_path: dependencies/group-sync-operator/manifests/controller/${group_sync_operator:manifest_version}/leader_election_role.yaml
+      - type: https
+        source: ${group_sync_operator:manifest_url}/rbac/leader_election_role_binding.yaml
+        output_path: dependencies/group-sync-operator/manifests/controller/${group_sync_operator:manifest_version}/leader_election_role_binding.yaml
+      - type: https
         source: ${group_sync_operator:manifest_url}/rbac/service_account.yaml
         output_path: dependencies/group-sync-operator/manifests/controller/${group_sync_operator:manifest_version}/service_account.yaml
 
