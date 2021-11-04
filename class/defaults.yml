@@ -5,11 +5,11 @@ parameters:
     images:
       operator:
         registry: quay.io
-        repository: redhat-cop/group-sync-operator
-        tag: v0.0.14
+        repository: appuio/group-sync-operator
+        tag: v0.1.0
 
     manifest_version: ${group_sync_operator:images:operator:tag}
-    manifest_url: https://raw.githubusercontent.com/redhat-cop/group-sync-operator/${group_sync_operator:manifest_version}/config
+    manifest_url: https://raw.githubusercontent.com/appuio/group-sync-operator/${group_sync_operator:manifest_version}/config
 
     sync: {}
     secrets: {}
