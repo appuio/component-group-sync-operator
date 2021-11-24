@@ -8,8 +8,6 @@ local params = inv.parameters.group_sync_operator;
 
 local prefix = 'group-sync-';
 
-local groupSyncCRD = std.parseJson(kap.yaml_load('group-sync-operator/manifests/crds/' + params.manifest_version + '/redhatcop.redhat.io_groupsyncs.yaml'));
-
 local role = std.parseJson(kap.yaml_load('group-sync-operator/manifests/controller/' + params.manifest_version + '/role.yaml'));
 local service_account = std.parseJson(kap.yaml_load('group-sync-operator/manifests/controller/' + params.manifest_version + '/service_account.yaml'));
 local role_binding = std.parseJson(kap.yaml_load('group-sync-operator/manifests/controller/' + params.manifest_version + '/role_binding.yaml'));
@@ -87,13 +85,6 @@ local objects = [
 ];
 
 {
-  '00_crd': groupSyncCRD {
-    metadata+: {
-      annotations+: {
-        'argocd.argoproj.io/sync-wave': '-5',
-      },
-    },
-  },
   '10_namespace': kube.Namespace(params.namespace),
 }
 +
