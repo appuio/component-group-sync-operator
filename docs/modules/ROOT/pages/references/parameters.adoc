@@ -14,15 +14,6 @@ The namespace in which to deploy this component.
 
 [horizontal]
 type:: dictionary
-default::
-+
-[source,yaml]
-----
-operator:
-  registry: quay.io
-  repository: redhat-cop/group-sync-operator
-  tag: v0.0.14
-----
 
 Dictionary containing the container images used by this component.
 
@@ -43,6 +34,15 @@ type:: string
 
 A crontab based schedule configuration, for when to synchronize the groups.
 If no schedule is provided, synchronization will only occur when the `GroupSync` object is reconciled by the platform.
+
+
+== `sync[].deleteDisappearedGroups`
+
+[horizontal]
+type:: bool
+default:: false
+
+Controls if groups disappeared from the source should be removed. The deletion of groups is provider scoped.
 
 
 == `sync[].providers`
@@ -92,6 +92,7 @@ parameters:
               scope: sub
       bar:
         schedule: '* * 2 * *'
+        deleteDisappearedGroups: true
         providers:
           bar-azure:
             azure:

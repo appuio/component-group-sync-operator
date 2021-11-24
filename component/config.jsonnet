@@ -41,12 +41,8 @@ local groupSyncs = std.filter(
             name: k,
             namespace: params.namespace,
             labels+: labels,
-            annotations+: {
-              'argocd.argoproj.io/sync-options': 'SkipDryRunOnMissingResource=true',
-            },
           },
-          spec: {
-            schedule: params.sync[k].schedule,
+          spec: params.sync[k] {
             providers: [
               { name: p } + patchProvider(params.sync[k].providers[p])
               for p in std.objectFields(params.sync[k].providers)
