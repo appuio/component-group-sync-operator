@@ -30,6 +30,9 @@ spec:
             spec:
               description: GroupSyncSpec defines the desired state of GroupSync
               properties:
+                deleteDisappearedGroups:
+                  description: DeleteDisappearedGroups controls if disappeared groups should be removed. The deletion of groups is provider scoped.
+                  type: boolean
                 providers:
                   description: List of Providers that can be mounted by containers belonging to the pod.
                   items:
@@ -573,6 +576,27 @@ spec:
                           - appId
                           - credentialsSecret
                           - url
+                        type: object
+                      static:
+                        description: Static represents the Static provider
+                        properties:
+                          groups:
+                            description: Groups represents a list of groups to synchronize
+                            items:
+                              description: StaticProvider allow statically setting Groups
+                              properties:
+                                name:
+                                  description: Name represents the name of the group
+                                  type: string
+                                users:
+                                  description: Users represents a list of users to apply to the synchronized group.
+                                  items:
+                                    type: string
+                                  type: array
+                              required:
+                                - name
+                              type: object
+                            type: array
                         type: object
                     required:
                       - name
