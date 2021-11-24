@@ -26,11 +26,6 @@ parameters:
 
     compile:
       - input_paths:
-          - group-sync-operator/manifests/crds/${group_sync_operator:manifest_version}/
-        input_type: copy
-        output_path: group-sync-operator/00_crds/
-
-      - input_paths:
           - group-sync-operator/component/app.jsonnet
         input_type: jsonnet
         output_path: apps/
