@@ -23,6 +23,7 @@ parameters:
               scope: sub
       other:
         schedule: '* * 2 * *'
+        deleteDisappearedGroups: true
         providers:
           foo:
             azure:
