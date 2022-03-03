@@ -251,6 +251,11 @@ spec:
                           subGroupJoinSeparator:
                             description: SubGroupJoinSeparator represents the separator to join group names if subGroupProcessing is set to join
                             type: string
+                          subGroupJoinStripRootGroups:
+                            description: SubGroupJoinStripGroups controls whether to strip the root groups given by name.
+                            items:
+                              type: string
+                            type: array
                           subGroupProcessing:
                             description: SubGroupProcessing controls how sub groups are processed. Flat flattens the groups and is the default. Groups "hidden-fox" with child "staff" and "purple-bat" with child "staff" become "hidden-fox", "purple-bat", "staff". Join joins the group names with a configurable separator. Groups "hidden-fox" with child "staff" and "purple-bat" with child "staff" become "hidden-fox", "hidden-fox/staff", "purple-bat", "purple-bat/staff".
                             enum:

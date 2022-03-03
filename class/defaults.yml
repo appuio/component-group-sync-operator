@@ -6,7 +6,7 @@ parameters:
       operator:
         registry: quay.io
         repository: appuio/group-sync-operator
-        tag: v0.2.0
+        tag: v0.3.0
 
     manifest_version: ${group_sync_operator:images:operator:tag}
     manifest_url: https://raw.githubusercontent.com/appuio/group-sync-operator/${group_sync_operator:manifest_version}/config
