@@ -2,6 +2,11 @@
   componentName: group-sync-operator
   githubUrl: https://github.com/appuio/component-group-sync-operator
   feature_goldenTests: true
+  testMatrix:
+    key: instance
+    entries:
+      - defaults
+      - empty
 
 docs/antora.yml:
   name: group-sync-operator
@@ -14,8 +19,3 @@ docs/antora.yml:
 .github/workflows/test.yaml:
   goldenTest_makeTarget: golden-diff -e instance=${{ matrix.instance }}
   makeTarget: test -e instance=${{ matrix.instance }}
-  matrix:
-    key: instance
-    entries:
-      - defaults
-      - empty
