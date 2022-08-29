@@ -1,0 +1,21 @@
+{
+  "template": "https://github.com/projectsyn/commodore-component-template.git",
+  "commit": "e6c4fd69190db1ad12e941d578b9423d0e2f993c",
+  "checkout": "main",
+  "context": {
+    "cookiecutter": {
+      "name": "Group Sync Operator",
+      "slug": "group-sync-operator",
+      "parameter_key": "group_sync_operator",
+      "test_cases": "defaults empty",
+      "add_golden": "y",
+      "add_matrix": "y",
+      "add_go_unit": "n",
+      "github_owner": "appuio",
+      "github_name": "component-group-sync-operator",
+      "github_url": "https://github.com/appuio/component-group-sync-operator",
+      "_template": "https://github.com/projectsyn/commodore-component-template.git"
+    }
+  },
+  "directory": null
+}
