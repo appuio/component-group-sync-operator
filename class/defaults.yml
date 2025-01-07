@@ -1,5 +1,7 @@
 parameters:
   group_sync_operator:
+    =_metadata:
+      multi_tenant: true
     namespace: syn-group-sync-operator
 
     images:

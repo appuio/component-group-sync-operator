@@ -5,6 +5,10 @@ local argocd = import 'lib/argocd.libjsonnet';
 
 local app = argocd.App('group-sync-operator', params.namespace);
 
+local appPath =
+  local project = std.get(app, 'spec', { project: 'syn' }).project;
+  if project == 'syn' then 'apps' else 'apps-%s' % project;
+
 {
-  'group-sync-operator': app,
+  ['%s/group-sync-operator' % appPath]: app,
 }
